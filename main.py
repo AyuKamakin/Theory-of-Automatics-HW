@@ -31,12 +31,12 @@ for i in alldes.keys():
             sumR=sumR-10
         sum='0'*(4-len(sum))+sum
         data[int(i)].append(alldes[sumR]+'\n'+sum)
-        #print(f'a={alldes[i]}={i}, b={alldes[j]}={j}\nright sum in 8421+3={alldes[i+j]}, calculated sum in 8421+3={sum}\n')
         sum = '0' * (4 - len(sum)) + sum
-        sum1= binary_sum(sum, '0111')
-        data[int(i)][int(j)] += '\n' + 'коррект 0011: '+ sum1
-        sum2 =binary_sum(sum, '0111')
-        data[int(i)][int(j)] += '\n' + 'коррект 0111: ' + sum2
-        sum3 = binary_sum(sum, '1011')
-        data[int(i)][int(j)] += '\n' + 'коррект  1011: ' + ' ' + sum3
+        for cc in ('0011','0111','1101'):
+            sumK= binary_sum(sum, cc)[2:]
+            if len(sumK)>4:
+                sumK=sumK[1:]
+            sumK = '0' * (4 - len(sumK)) + sumK
+            if alldes[sumR]==sumK:
+                data[int(i)][int(j)] += '\n' + 'коррект '+cc+': '+sumK
 print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always"))
