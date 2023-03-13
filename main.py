@@ -32,24 +32,11 @@ for i in alldes.keys():
         sum='0'*(4-len(sum))+sum
         data[int(i)].append(alldes[sumR]+'\n'+sum)
         #print(f'a={alldes[i]}={i}, b={alldes[j]}={j}\nright sum in 8421+3={alldes[i+j]}, calculated sum in 8421+3={sum}\n')
-        if sum!=alldes[sumR]:
-           # if i+j<10:
-            #    sum=binary_sum(sum,'1101')[3:]
-             #   sum = '0' * (4 - len(sum)) + sum
-              #  data[int(i)][int(j)]+='\n'+'1101'+'\n' + sum
-            if ('0'*(4-len(binary_sum(sum, '0011')[2:])) + binary_sum(sum, '0011')[2:]) == alldes[sumR]:
-                sum = '0' * (4 - len(binary_sum(sum, '0111')[2:])) + binary_sum(sum, '0111')[2:]
-                data[int(i)][int(j)] += '\n' + '0011' + '\n' + sum
-            elif ('0'*(4-len(binary_sum(sum, '0111')[2:])) + binary_sum(sum, '0111')[2:]) == alldes[sumR]:
-                sum = '0' * (4 - len(binary_sum(sum, '0111')[2:])) + binary_sum(sum, '0111')[2:]
-                data[int(i)][int(j)] += '\n' + '0111' + '\n' + sum
-            elif ('0'*(4-len(binary_sum(sum, '1011')[2:])) + binary_sum(sum, '1011')[2:]) == alldes[sumR]:
-                sum = '0' * (4 - len(binary_sum(sum, '1011')[2:])) + binary_sum(sum, '1011')[2:]
-                data[int(i)][int(j)] += '\n' + '1011' + '\n' + sum
-            elif ('0'*(4-len(binary_sum(sum, '1011')[3:])) + binary_sum(sum, '1011')[3:]) == alldes[sumR]:
-                sum = '0' * (4 - len(binary_sum(sum, '1011')[3:])) + binary_sum(sum, '1011')[3:]
-                data[int(i)][int(j)] += '\n' + '1011' + '\n' + sum
-            #if alldes[i+j]==sum:
-                #print(f'a={a}={i}\nb={b}={j}\nright sum in 8421+3={alldes[i+j]}\ncalculated sum in 8421+3={sum}')
-#print(f'{a} = {int(a,2)} \n{b} = {int(b,2)} \n{binary_sum(a, b)[2:]}, {int(binary_sum(a, b)[2:],2)}')
+        sum = '0' * (4 - len(sum)) + sum
+        sum1= binary_sum(sum, '0111')
+        data[int(i)][int(j)] += '\n' + 'коррект 0011: '+ sum1
+        sum2 =binary_sum(sum, '0111')
+        data[int(i)][int(j)] += '\n' + 'коррект 0111: ' + sum2
+        sum3 = binary_sum(sum, '1011')
+        data[int(i)][int(j)] += '\n' + 'коррект  1011: ' + ' ' + sum3
 print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always"))
