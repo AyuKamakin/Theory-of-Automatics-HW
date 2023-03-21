@@ -1,4 +1,27 @@
 from tabulate import tabulate
+def secsum(a, b, c):
+    s=str(a)+str(b)+str(c)
+    meaning='0'
+    perenos='0'
+    if s.count('1')==2:
+        perenos=1
+    elif s.count('1')==3:
+        perenos=1
+        meaning='1'
+    elif s.count('1')==1:
+        meaning='1'
+    return [meaning,perenos]
+def goThrough(num1, num2):
+    res=secsum(str(num1)[-1], str(num2)[-1],'0')[0]
+    p=secsum(str(num1)[-1], str(num2)[-1],'0')[1]
+    if len(str(num1))>len(str(num2)):
+        num2=(len(num1)-len(num2))*'0'+num2
+    elif len(num1)<len(num2):
+        num1=(len(num2)-len(num1))*'0'+num1
+    for i in range(-2, -len(num1)-1, -1):
+        res=secsum(str(num1)[i], str(num2)[i],p)[0]+res
+        p=secsum(str(num1)[i], str(num2)[i],p)[1]
+    return res
 a = "1101"
 b = "1001"
 dop='0011'
@@ -20,23 +43,18 @@ for i in alldes.keys():
 print(alldes)
 print('сверху ожидаемое значение, под ним посчитанное, под подсчитанным коррекция, внизу итог')
 data=[]
+res={}
 for i in alldes.keys():
     data.append([])
     for j in alldes.keys():
-        sum=binary_sum(alldes[i], alldes[j])[2:]
-        if len(sum)>4:
-            sum=sum[3:]
+        sum=goThrough(alldes[i], alldes[j])
         sumR=i+j
         if sumR>=10:
             sumR=sumR-10
-        sum='0'*(4-len(sum))+sum
         data[int(i)].append(alldes[sumR]+'\n'+sum)
-        sum = '0' * (4 - len(sum)) + sum
         for cc in ('0011','0111','1101'):
-            sumK= binary_sum(sum, cc)[2:]
-            if len(sumK)>4:
-                sumK=sumK[1:]
-            sumK = '0' * (4 - len(sumK)) + sumK
+            sumK= goThrough(sum, cc)
             if alldes[sumR]==sumK:
                 data[int(i)][int(j)] += '\n' + 'коррект '+cc+': '+sumK
-print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always"))
+
+print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always")) #
