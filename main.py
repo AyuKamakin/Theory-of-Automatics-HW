@@ -28,7 +28,7 @@ dop='0011'
 allBIN=[]
 allDESCOD=[]
 alldes={}
-correction={}
+correction={'1101':[], '0011':[]}
 binary_sum = lambda a, b: bin(int(a, 2) + int(b, 2))
 for a1 in '0','1':
     for a2 in '0', '1':
@@ -56,5 +56,54 @@ for i in alldes.keys():
             sumK= goThrough(sum, cc)
             if alldes[sumR]==sumK:
                 data[int(i)][int(j)] += '\n' + 'коррект '+cc+': '+sumK
+                if sum not in correction[cc]:
+                    correction[cc].append(sum)
 
 print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always")) #
+print(alldes)
+a=input()
+while a!='E':
+    word1=''
+    sum=[]
+    sum2=[]
+    word2=''
+    corr=[]
+    rsum=''
+    sumR=int(a.split()[0])+int(a.split()[1])
+    sumR=str(sumR)
+    for i in sumR:
+        rsum=rsum+alldes[int(i)]
+    for i in range(0, len(a.split()[0])):
+        word1+=alldes[int(a.split()[0][i])]
+        word2+=alldes[int(a.split()[1][i])]
+        sum.append(goThrough(alldes[int(a.split()[0][i])],alldes[int(a.split()[1][i])]))
+        if int(a.split()[0][i])+int(a.split()[1][i])<10:
+            sum2.append(goThrough(sum[-1], '1101'))
+            corr.append('1101')
+        else:
+            sum2.append(goThrough(sum[-1], '0011'))
+            corr.append('0011')
+
+    print(" "+word1)
+    print("+")
+    print(" "+word2)
+    print(' ------------')
+    print(" ", end='')
+    for i in reversed(sum):
+        print(i, end='')
+    print("\n+\n ", end='')
+    for i in reversed(corr):
+        print(i, end='')
+    print("\n ------------\n ", end='')
+    for i in reversed(sum2):
+        print(i, end='')
+    print("\n ------------\n ", end='')
+    print('верная сумма: '+rsum)
+    a=input()
+a=input()
+while a!='E':
+    for j in correction.keys():
+        for i in correction[j]:
+            if i==a:
+                print(j)
+    a = input()
