@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from tabulate import tabulate
-
 def secsum(a, b, c):
     s=str(a)+str(b)+str(c)
     meaning='0'
@@ -54,17 +53,17 @@ if __name__=="__main__":
         for i in alldes.keys():
             data.append([])
             for j in alldes.keys():
-                sum=goThrough(alldes[i], alldes[j])
+                sum1=goThrough(alldes[i], alldes[j])
                 sumR=i+j
                 if sumR>=10:
                     sumR=sumR-10
-                data[int(i)].append(alldes[sumR]+'\n'+sum)
+                data[int(i)].append(alldes[sumR]+'\n'+sum1)
                 for cc in ('0011','0111','1101'):
-                    sumK= goThrough(sum, cc)
+                    sumK= goThrough(sum1, cc)
                     if alldes[sumR]==sumK:
                         data[int(i)][int(j)] += '\n' + 'коррект '+cc+': '+sumK
-                        if sum not in correction[cc]:
-                            correction[cc].append(sum)
+                        if sum1 not in correction[cc]:
+                            correction[cc].append(sum1)
 
         print(tabulate(data, headers=alldes.keys(), tablefmt="fancy_grid", showindex="always")) #
         print(alldes)
@@ -72,7 +71,7 @@ if __name__=="__main__":
         a='E'
         while a!='E':
             word1=''
-            sum=[]
+            sum1=[]
             sum2=[]
             word2=''
             corr=[]
@@ -84,12 +83,12 @@ if __name__=="__main__":
             for i in range(0, len(a.split()[0])):
                 word1+=alldes[int(a.split()[0][i])]
                 word2+=alldes[int(a.split()[1][i])]
-                sum.append(goThrough(alldes[int(a.split()[0][i])],alldes[int(a.split()[1][i])]))
+                sum1.append(goThrough(alldes[int(a.split()[0][i])],alldes[int(a.split()[1][i])]))
                 if int(a.split()[0][i])+int(a.split()[1][i])<10:
-                    sum2.append(goThrough(sum[-1], '1101'))
+                    sum2.append(goThrough(sum1[-1], '1101'))
                     corr.append('1101')
                 else:
-                    sum2.append(goThrough(sum[-1], '0011'))
+                    sum2.append(goThrough(sum1[-1], '0011'))
                     corr.append('0011')
 
             print(" "+word1)
@@ -97,7 +96,7 @@ if __name__=="__main__":
             print(" "+word2)
             print(' ------------')
             print(" ", end='')
-            for i in reversed(sum):
+            for i in reversed(sum1):
                 print(i, end='')
             print("\n+\n ", end='')
             for i in reversed(corr):
